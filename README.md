@@ -3,7 +3,7 @@
 
   <img src="./src/assets/CryptoHub.png" alt="CryptoHub Preview" width="100%">
   
-  [![Live Demo](https://img.shields.io/badge/Live-Demo-7927ff?style=for-the-badge)](crypto-hub-rosy.vercel.app)
+  [![Live Demo](https://img.shields.io/badge/Live-Demo-7927ff?style=for-the-badge)](https://crypto-hub-rosy.vercel.app)
   [![GitHub Stars](https://img.shields.io/github/stars/KaranUnique/CryptoHub?style=for-the-badge&logo=github)](https://github.com/KaranUnique/CryptoHub/stargazers)
   [![GitHub Forks](https://img.shields.io/github/forks/KaranUnique/CryptoHub?style=for-the-badge&logo=github)](https://github.com/KaranUnique/CryptoHub/network/members)
   [![License](https://img.shields.io/badge/License-MIT-2193b0?style=for-the-badge)](LICENSE)
