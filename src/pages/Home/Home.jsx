@@ -46,13 +46,13 @@ const Home = () => {
             required
           />
           <datalist id="coinlist">
-            {allCoin.map((item,index)=>(<option key={index} value={item.name}/>))}
+            {allCoin.map((item, index) => (<option key={index} value={item.name} />))}
           </datalist>
           <button type="submit">Search</button>
         </form>
       </div>
-      <div data-aos="fade-up"className="crypto-table">
-        <div className="table-layout">
+      <div className="crypto-table">
+        <div data-aos="fade-up" className="table-layout">
           <p>#</p>
           <p>Coins</p>
           <p>Price</p>
@@ -61,8 +61,11 @@ const Home = () => {
         </div>
         {displayCoin.slice(0, 10).map((item, index) => (
           <Link
-          to={`/coin/${item.id}`}
-          className="table-layout" key={index}>
+            to={`/coin/${item.id}`}
+            className="table-layout"
+            key={index} 
+            data-aos="fade-up"
+          >
             <p>{item.market_cap_rank}</p>
             <div>
               <img src={item.image}></img>

@@ -111,6 +111,7 @@
 .crypto-table{
     max-width: 800px;
     margin: auto;
+    margin-top: 40px;
     background:linear-gradient(rgba(84,3,255,0.15),rgba(105,2,153,0.15));
     border-radius: 15px;
 }
