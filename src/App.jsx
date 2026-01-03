@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Navbar from "./components/Navbar";
-import Callback from "./pages/Callback";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Coin from "./pages/Home/Coin/Coin";
 import Footer from "./components/Footer";
@@ -11,33 +10,42 @@ import Features from "./components/Features";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import BlogDetail from "./components/BlogDetail";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const App = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
+  const location = useLocation();
+  const isDashboard = location.pathname === "/dashboard";
 
   return (
-    <div className="app">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/coin/:coinId" element={<Coin />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/blog" element={<Blog />} />
-
-        <Route path="/blog/:id" element={<BlogDetail />} />
-
-        <Route path="/features" element={<Features />} />
-        <Route path="/callback" element={<Callback />} />
-      </Routes>
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <AuthProvider>
+        <div className="app">
+          {!isDashboard && <Navbar />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/coin/:coinId" element={<Coin />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+          {!isDashboard && <Footer />}
+        </div>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 

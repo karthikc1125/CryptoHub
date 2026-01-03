@@ -1,54 +1,58 @@
-import React, { useContext, useState, useEffect } from "react";
-import "./Navbar.css";
-import { useAuth0 } from "@auth0/auth0-react";
-import Login from "./Login";
-import Signup from "./Signup";
-import Logout from "./Logout";
-
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import { CoinContext } from "../context/CoinContext";
-import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
   const { setCurrency } = useContext(CoinContext);
-  const { loginWithRedirect, logout, isAuthenticated, isLoading, user } = useAuth0();
+  const { currentUser, logout } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState({ label: "USD", value: "usd", symbol: "$" });
 
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("cryptohub-theme");
-    return savedTheme ? savedTheme === "dark" : true;
-  });
+  const isDashboardPage = location.pathname === "/dashboard";
 
-  const currencyHandler = (event) => {
-    switch (event.target.value) {
-      case "usd": {
-        setCurrency({ name: "usd", Symbol: "$" });
-        break;
-      }
-      case "eur": {
-        setCurrency({ name: "eur", Symbol: "€" });
-        break;
-      }
-      case "inr": {
-        setCurrency({ name: "inr", Symbol: "₹" });
-        break;
-      }
-      default: {
-        setCurrency({ name: "usd", Symbol: "$" });
-        break;
-      }
+  const currencies = [
+    { label: "USD", value: "usd", symbol: "$" },
+    { label: "EUR", value: "eur", symbol: "€" },
+    { label: "INR", value: "inr", symbol: "₹" },
+  ];
+
+  const currencyHandler = useCallback((currency) => {
+    setSelectedCurrency(currency);
+    setCurrency({ name: currency.value, Symbol: currency.symbol });
+    setIsCurrencyOpen(false);
+  }, [setCurrency]);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await logout();
+      navigate("/");
+      setIsMobileMenuOpen(false);
+    } catch (error) {
+      console.error("Failed to logout:", error);
     }
-  };
+  }, [logout, navigate]);
 
   useEffect(() => {
     if (isDark) {
       document.body.removeAttribute("data-theme");
-      localStorage.setItem("cryptohub-theme", "dark");
     } else {
       document.body.setAttribute("data-theme", "light");
-      localStorage.setItem("cryptohub-theme", "light");
     }
   }, [isDark]);
 
-  if (isLoading) return null;
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/pricing", label: "Pricing" },
+    { to: "/blog", label: "Blog" },
+    { to: "/features", label: "Features" },
+  ];
 
   return (
     <div className="navbar">
@@ -70,41 +74,55 @@ function Navbar() {
           <span className="logo-text">CryptoHub</span>
         </Link>
       </div>
-      <ul>
-        <Link to={"/"}>
-          <li>Home</li>
-        </Link>
-        <Link to={"/pricing"}>
-          <li>Pricing</li>
-        </Link>
-        <Link to={"/blog"}>
-          <li>Blog</li>
-        </Link>
-        <Link to={"/features"}>
-          <li>Features</li>
-        </Link>
-      </ul>
+
+      {!isDashboardPage && (
+        <ul>
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to}>
+              <li>{link.label}</li>
+            </Link>
+          ))}
+          {currentUser && (
+            <Link to="/dashboard">
+              <li>Dashboard</li>
+            </Link>
+          )}
+        </ul>
+      )}
+
       <div className="nav-right">
-        <div className="theme-toggle" onClick={() => setIsDark(!isDark)}>
+        <div className="theme-toggle" onClick={toggleTheme}>
           <div className={`toggle-track ${isDark ? "dark" : "light"}`}>
             <div className="toggle-thumb"></div>
           </div>
         </div>
-        <select onChange={currencyHandler}>
+
+        <select onChange={(e) => {
+          const currency = currencies.find(c => c.value === e.target.value);
+          currencyHandler(currency);
+        }}>
           <option value="usd">USD</option>
           <option value="eur">EUR</option>
           <option value="inr">INR</option>
         </select>
 
-        {isAuthenticated ? (
+        {currentUser ? (
           <>
-            <Logout logout={logout} />
-            <p className="user-greeting">Welcome, {user?.name.split(" ")[0] || user?.name}</p>
+            <div className="user-info">
+              <span className="user-email">{currentUser.email}</span>
+            </div>
+            <button onClick={handleLogout} className="logout-btn">
+              Logout
+            </button>
           </>
         ) : (
           <>
-            <Login loginWithRedirect={loginWithRedirect} />
-            <Signup loginWithRedirect={loginWithRedirect} />
+            <Link to="/login">
+              <button className="login-btn">Login</button>
+            </Link>
+            <Link to="/signup">
+              <button className="login-btn">Sign up</button>
+            </Link>
           </>
         )}
       </div>

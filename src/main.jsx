@@ -4,24 +4,19 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { CoinContextProvider } from "./context/CoinContext";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <Auth0Provider
-        domain={import.meta.env.VITE_AUTH0_DOMAIN}
-        clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
-        authorizationParams={{
-          redirect_uri: window.location.origin + "/callback",
-        }}
-        cacheLocation="localstorage"
-        useRefreshTokens={true}
-      >
-        <CoinContextProvider>
-          <App />
-        </CoinContextProvider>
-      </Auth0Provider>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <ThemeProvider>
+        <AuthProvider>
+          <CoinContextProvider>
+            <App />
+          </CoinContextProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>
 );

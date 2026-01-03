@@ -280,6 +280,7 @@
     padding: 15px 20px;
     align-items: center;
     border-bottom: 1px solid #3c3c3c;
+    contain: layout;
 }
 
 .market-cap {
@@ -298,6 +299,9 @@
 
 .table-layout div img {
     width: 35px;
+    height: 35px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
 }
 
 .table-layout .green {
@@ -323,6 +327,7 @@
 @media (max-width: 500px) {
     .table-layout div img {
         width: 25px;
+        height: 25px;
     }
 
     .table-layout {

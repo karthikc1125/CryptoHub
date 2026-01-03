@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback, useMemo } from "react";
 
 export const CoinContext = createContext();
 
@@ -9,7 +9,7 @@ export const CoinContextProvider = (props) => {
     Symbol: "$",
   });
 
-  const fetchAllCoin = async () => {
+  const fetchAllCoin = useCallback(async () => {
     const apiKey = import.meta.env.VITE_CG_API_KEY;
     const options = {
       method: "GET",
@@ -19,7 +19,7 @@ export const CoinContextProvider = (props) => {
     };
 
     // Add API key as query parameter if available
-    const url = apiKey 
+    const url = apiKey
       ? `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}&x_cg_demo_api_key=${apiKey}`
       : `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}`;
 
@@ -42,17 +42,17 @@ export const CoinContextProvider = (props) => {
         console.error("Failed to fetch coins:", err);
         setAllCoin([]);
       });
-  };
+  }, [currency.name]);
 
   useEffect(() => {
     fetchAllCoin();
-  }, [currency]);
+  }, [fetchAllCoin]);
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     allCoin,
     currency,
     setCurrency,
-  };
+  }), [allCoin, currency]);
   return (
     <CoinContext.Provider value={contextValue}>
       {props.children}

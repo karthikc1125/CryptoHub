@@ -132,11 +132,16 @@ const Home = () => {
         </div>
 
         {displayCoin.slice(0, visibleCount).map((item, index) => (
-          <Link to={`/coin/${item.id}`} className="table-layout" key={index}>
+          <Link
+            to={`/coin/${item.id}`}
+            className="table-layout"
+            key={index}
+            data-aos="fade-up"
+          >
             <p>{item.market_cap_rank}</p>
             <div>
-              <img src={item.image} alt={item.name} />
-              <p>{item.name} - {item.symbol}</p>
+              <img src={item.image} alt={item.name} width="40" height="40"></img>
+              <p>{item.name + " - " + item.symbol}</p>
             </div>
             <p>{currency.Symbol}{item.current_price.toLocaleString()}</p>
             <p className={item.price_change_percentage_24h > 0 ? "green" : "red"}>
