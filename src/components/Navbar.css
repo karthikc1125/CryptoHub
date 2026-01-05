@@ -251,10 +251,12 @@
   flex-wrap: nowrap !important;
   /* Never stack */
   align-items: center;
-  justify-content: space-between;
-  /* Use the space left and right of links */
-  max-width: 500px;
-  /* Reduced to bring links closer together */
+  justify-content: center;
+  /* Center the links */
+  gap: 2rem;
+  /* Space between links */
+  max-width: 600px;
+  /* Enough space for all links */
   margin: 0 auto;
   /* Center the group in the header */
 }
@@ -399,9 +401,11 @@
   align-items: center;
   gap: 1rem;
   background: rgba(255, 255, 255, 0.05);
-  padding: 6px 16px;
+  padding: 8px 20px;
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  min-width: fit-content;
 }
 
 /* Signup Button - ensuring consistency if it exists */
@@ -439,6 +443,10 @@
 .user-email {
   font-size: 0.9rem;
   color: #cbd5e1;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .icon-btn {
@@ -482,8 +490,6 @@
 
 /* Mobile Menu */
 .mobile-menu {
-  display: none;
-  /* Handled via JS typically, but structure for safety */
   position: absolute;
   top: 100%;
   left: 0;
@@ -492,6 +498,24 @@
   flex-direction: column;
   gap: 2rem;
   z-index: 999;
+  background: rgba(5, 5, 5, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobile-nav-links {
@@ -500,13 +524,56 @@
   flex-direction: column;
   gap: 1.5rem;
   text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav-links li {
+  width: 100%;
+}
+
+.mobile-nav-links a {
+  display: block;
+  width: 100%;
+  color: var(--text-secondary);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-links a:hover,
+.mobile-nav-links a.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .mobile-actions {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 1rem;
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-actions a,
+.mobile-actions button {
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.mobile-actions .btn-primary {
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+  color: #fff;
+  border: none;
 }
 
 .toggle-track.light .toggle-thumb {
@@ -770,16 +837,122 @@ body[data-theme='light'] .mobile-controls {
 body[data-theme='light'] .mobile-control-item {
   color: #475569;
 /* Responsiveness */
+
+/* Tablet devices (768px - 1024px) */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 1rem 3%;
+  }
+
+  .navbar-container {
+    padding: 0 0.5rem;
+  }
+
+  .nav-links {
+    max-width: 500px;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
+  }
+
+  .user-email {
+    font-size: 0.85rem;
+    max-width: 150px;
+  }
+
+  .user-menu {
+    padding: 6px 16px;
+  }
+}
+
+/* Mobile devices (up to 768px) */
 @media (max-width: 768px) {
   .desktop-only {
-    display: none;
+    display: none !important;
   }
 
   .mobile-toggle {
     display: block;
   }
 
+  .navbar {
+    padding: 0.75rem 4%;
+  }
+
+  .navbar.scrolled {
+    padding: 0.6rem 4%;
+  }
+
+  .navbar-container {
+    padding: 0;
+  }
+
+  .logo-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+}
+
+/* Small mobile devices (up to 480px) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem 3%;
+  }
+
+  .logo-wrapper {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
   .mobile-menu {
-    display: flex;
+    padding: 1.5rem 1rem;
+  }
+
+  .mobile-nav-links {
+    gap: 1rem;
+  }
+
+  .mobile-nav-links a {
+    font-size: 1rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .mobile-actions a,
+  .mobile-actions button {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .mobile-toggle {
+    padding: 0.5rem;
+  }
+}
+
+/* Extra small devices (up to 360px) */
+@media (max-width: 360px) {
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .navbar-brand {
+    gap: 8px;
+  }
+
+  .mobile-menu {
+    padding: 1rem 0.75rem;
   }
 }

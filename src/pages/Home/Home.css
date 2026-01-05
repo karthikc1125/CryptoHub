@@ -440,12 +440,33 @@
 
     .table-header,
     .table-row {
-        grid-template-columns: 0.5fr 2fr 1.5fr;
+        padding: 15px 12px;
+        gap: 12px;
     }
 
-    .col-mcap,
-    .col-change {
-        display: none;
+    .coin-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+    }
+}
+
+/* Mobile devices (481px - 768px) */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 0 4% 60px 4%;
+    }
+
+    .cosmic-hero {
+        min-height: 60vh;
+        padding-top: 20px;
     }
 
     .hero form input {
@@ -546,6 +567,12 @@
     }
     .hero-title {
         font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 25px;
     }
 
     .hero-planet {
@@ -554,6 +581,263 @@
     }
 
     .orbital-element {
-        transform: scale(0.8);
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        gap: 6px;
+        border-radius: 20px;
+    }
+
+    .orb-1 {
+        top: 12%;
+        left: 5%;
+    }
+
+    .orb-2 {
+        bottom: 35%;
+        right: 5%;
+    }
+
+    .orb-3 {
+        top: 10%;
+        right: 8%;
+    }
+
+    .orb-4 {
+        bottom: 25%;
+        left: 8%;
+    }
+
+    .orb-5 {
+        top: 50%;
+        right: 3%;
+    }
+
+    .search-orbit-container {
+        max-width: 100%;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .live-indicator {
+        font-size: 0.85rem;
+        padding: 5px 12px;
+    }
+
+    /* Make table scrollable horizontally */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 0.5fr 2fr 1.5fr 1.2fr 1.5fr;
+        padding: 12px 10px;
+        gap: 10px;
+        min-width: 600px;
+    }
+
+    .coin-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .coin-symbol {
+        font-size: 0.95rem;
+    }
+
+    .coin-fullname {
+        font-size: 0.75rem;
+    }
+
+    .col-price,
+    .col-change,
+    .col-mcap {
+        font-size: 0.9rem;
+    }
+
+    .col-rank {
+        font-size: 0.9rem;
+    }
+
+    .load-more-wrapper {
+        margin-top: 30px;
+    }
+}
+
+/* Small mobile devices (320px - 480px) */
+@media (max-width: 480px) {
+    .home-container {
+        padding: 0 3% 50px 3%;
+    }
+
+    .cosmic-hero {
+        min-height: 50vh;
+        padding-top: 15px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: -1px;
+        margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .hero-planet {
+        width: 120px;
+        height: 120px;
+    }
+
+    .hero-glow-center {
+        width: 400px;
+        height: 400px;
+    }
+
+    .search-bar-cosmic {
+        padding: 4px 6px;
+    }
+
+    .search-icon {
+        font-size: 1rem;
+        margin: 0 8px;
+    }
+
+    .search-bar-cosmic input {
+        font-size: 0.9rem;
+        padding: 6px 0;
+    }
+
+    .filter-trigger {
+        width: 36px;
+        height: 36px;
+    }
+
+    .cosmic-filters {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .orbital-element {
+        padding: 4px 10px;
+        font-size: 0.65rem;
+        gap: 5px;
+    }
+
+    .orb-1 {
+        top: 8%;
+        left: 3%;
+    }
+
+    .orb-2 {
+        bottom: 30%;
+        right: 3%;
+    }
+
+    .orb-3 {
+        top: 6%;
+        right: 5%;
+    }
+
+    .orb-4 {
+        bottom: 20%;
+        left: 5%;
+    }
+
+    .orb-5 {
+        display: none;
+    }
+
+    .section-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .live-indicator {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 0.4fr 2fr 1.3fr 1.2fr 1.3fr;
+        padding: 10px 8px;
+        gap: 8px;
+        min-width: 550px;
+    }
+
+    .coin-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .coin-symbol {
+        font-size: 0.85rem;
+    }
+
+    .coin-fullname {
+        font-size: 0.7rem;
+    }
+
+    .col-price,
+    .col-change,
+    .col-mcap {
+        font-size: 0.85rem;
+    }
+
+    .col-rank {
+        font-size: 0.85rem;
+    }
+
+    .col-change svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .load-more-wrapper {
+        margin-top: 25px;
+    }
+
+    .btn-neon {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+}
+
+/* Extra small devices (up to 360px) */
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .table-header,
+    .table-row {
+        padding: 8px 6px;
+        gap: 6px;
+        min-width: 500px;
+    }
+
+    .coin-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .search-bar-cosmic input {
+        font-size: 0.85rem;
     }
 }
