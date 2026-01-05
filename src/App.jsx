@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import BlogDetail from "./components/BlogDetail";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Leaderboard from "./components/Leaderboard";
+import ChangePassword from "./components/ChangePassword";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -65,6 +66,14 @@ const App = () => {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/change-password"
+              element={
+                <PrivateRoute>
+                  <ChangePassword />
                 </PrivateRoute>
               }
             />

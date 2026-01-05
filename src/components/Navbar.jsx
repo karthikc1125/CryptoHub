@@ -3,12 +3,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 /* import { useTheme } from "../context/ThemeContext"; */
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FiMenu, FiX, FiUser, FiLogOut } from "react-icons/fi"; // Added react-icons for cleaner UI
+
+import { FiMenu, FiX, FiUser, FiLogOut,FiLock } from "react-icons/fi"; // Added react-icons for cleaner UI
 import "./Navbar.css";
 
 function Navbar() {
   /* const { setCurrency } = useContext(CoinContext); */
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout ,isEmailProvider } = useAuth();
   /* const { theme } = useTheme(); */
   const navigate = useNavigate();
   const location = useLocation();
@@ -96,6 +97,18 @@ function Navbar() {
           {currentUser ? (
             <div className="user-menu">
               <span className="user-email">{currentUser.email}</span>
+
+               {/* Change Password - Only for email/password users */}
+                {isEmailProvider() && (
+                  <Link 
+                    to="/change-password" 
+                    className="icon-btn" 
+                    title="Change Password"
+                  >
+                    <FiLock />
+                  </Link>
+                )}
+
               <button onClick={handleLogout} className="icon-btn" title="Logout">
                 <FiLogOut />
               </button>
@@ -140,9 +153,20 @@ function Navbar() {
                 <Link to="/signup" className="btn-primary" onClick={() => setIsMobileMenuOpen(false)}>Get Started</Link>
               </>
             )}
-            {currentUser && (
-              <button onClick={handleLogout} className="btn-text">Logout</button>
+           {currentUser && (
+          <>
+            {isEmailProvider() && (
+              <Link 
+                to="/change-password" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="btn-text"
+              >
+                Change Password
+              </Link>
             )}
+            <button onClick={handleLogout} className="btn-text">Logout</button>
+          </>
+        )}
           </div>
         </div>
       )}

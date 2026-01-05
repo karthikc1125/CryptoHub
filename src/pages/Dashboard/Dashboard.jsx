@@ -313,7 +313,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="pt-2">
                                     <button
-                                        onClick={() => alert('Change Password feature coming soon!')}
+                                        onClick={() => navigate('/change-password')}
                                         className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-200 font-medium border ${isDark
                                             ? 'bg-[rgba(121,39,255,0.1)] hover:bg-[rgba(121,39,255,0.2)] text-purple-400 border-purple-600/30 hover:border-purple-500/50'
                                             : 'bg-purple-50 hover:bg-purple-100 text-purple-600 border-purple-200 hover:border-purple-300'

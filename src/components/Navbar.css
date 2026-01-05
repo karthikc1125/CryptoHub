@@ -138,10 +138,11 @@
   flex-wrap: nowrap !important;
   /* Never stack */
   align-items: center;
-  justify-content: space-between;
-  /* Use the space left and right of links */
-  max-width: 500px;
-  /* Reduced to bring links closer together */
+  justify-content: center;
+  gap: 2rem;
+  /* Add spacing between links */
+  max-width: 700px;
+  /* Increased to give more room */
   margin: 0 auto;
   /* Center the group in the header */
 }
