@@ -52,6 +52,7 @@ function Navbar() {
     { to: "/pricing", label: "Pricing" },
     { to: "/blog", label: "Blog" },
     { to: "/features", label: "Features" },
+    { to: "/contributors", label: "Contributors" },
   ];
 
   const authenticatedNavLinks = [

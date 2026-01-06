@@ -15,6 +15,8 @@ import Leaderboard from "./components/Leaderboard";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import Contributors from "./components/Contributors";
+
 
 const App = () => {
   const location = useLocation();
@@ -34,6 +36,8 @@ const App = () => {
             <Route path="/features" element={<Features />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/contributors" element={<Contributors />} />
+
             <Route
               path="/leaderboard"
               element={
