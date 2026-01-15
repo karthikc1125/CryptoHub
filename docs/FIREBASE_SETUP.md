@@ -52,5 +52,3 @@ For **local development**, add authorized domains:
 - [Authentication Settings](https://console.firebase.google.com/project/_/authentication/providers)
 - [Authorized Domains](https://console.firebase.google.com/project/_/authentication/settings)
 
-
-<h3 id="running-locally">🏃 Running Locally</h3>
