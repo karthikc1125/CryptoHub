@@ -236,7 +236,7 @@ const Home = () => {
               Page {currentPage} / {totalPages}
             </span>
             <button className="btn-neon-purple"
-              disabled={currentPage === totalPages}
+              disabled={currentPage === totalPages || totalPages === 0}
               onClick={() => setCurrentPage((p) => p + 1)}>
               Next
             </button>
