@@ -22,8 +22,9 @@ function Navbar() {
   };
 
   const handleDropdownLeave = () => {
-    setOpenDropdown(null);
-    };
+  setTimeout(() => setOpenDropdown(null), 100); 
+};
+
 
   const handleDropdownClick = (label) => {
     setOpenDropdown(openDropdown === label ? null : label);
@@ -122,7 +123,7 @@ function Navbar() {
       {(currentUser ? authenticatedNavLinks : navLinks).map((link) => (
         <li
           key={link.label}
-          className="navbar-item"
+          className="navbar-item dropdown-container"
           onMouseEnter={() => link.dropdown && handleDropdownEnter(link.label)}
           onMouseLeave={handleDropdownLeave}
         >
