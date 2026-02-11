@@ -1,4 +1,4 @@
-import React, { useEffect, useContext,useRef } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 import Navbar from "@/components/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -16,6 +16,7 @@ import DashboardContent from "@/pages/Dashboard/DashboardContent";
 import MarketOverview from "@/pages/Dashboard/MarketOverview";
 import Leaderboard from "@/components/Leaderboard";
 import ChangePassword from "@/components/ChangePassword";
+import SavedInsights from "@/pages/SavedInsights";
 import ForgotPassword from "@/components/ForgotPassword";
 import PrivateRoute from "@/components/PrivateRoute";
 import { AuthProvider } from "@/context/AuthContext";
@@ -67,7 +68,8 @@ const App = () => {
     location.pathname === "/dashboard" ||
     location.pathname === "/leaderboard" ||
     location.pathname === "/market-overview" ||
-    location.pathname === "/change-password" ;
+    location.pathname === "/change-password" ||
+    location.pathname === "/saved-insights";
 
   const authRoutes = ["/login", "/signup", "/forgot-password"];
   const isAuthPage = authRoutes.includes(location.pathname);
@@ -143,6 +145,7 @@ const App = () => {
                   <Route path="/market-overview" element={<MarketOverview />} />
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/change-password" element={<ChangePassword />} />
+                  <Route path="/saved-insights" element={<SavedInsights />} />
                 </Route>
 
                 {/* Coin route - accessible to all but shows sidebar if logged in */}
@@ -164,9 +167,9 @@ const App = () => {
                 <Route path="/cookies" element={<CookiePolicy />} />
               </Routes>
             </div>
-           {!isDashboard && !isAuthPage && <Footer />}
+            {!isDashboard && !isAuthPage && <Footer />}
           </div>
-          <ScrollToTop  lenis={lenisRef.current} />
+          <ScrollToTop lenis={lenisRef.current} />
         </AuthProvider>
       </ThemeProvider>
     </>

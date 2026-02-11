@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FiLock, FiUser, FiLogOut, FiMail } from "react-icons/fi";
+import { FiLock, FiUser, FiLogOut, FiMail, FiBookmark } from "react-icons/fi";
 import "./Navbar.css";
 
 function Navbar() {
@@ -221,6 +221,15 @@ function Navbar() {
                         <span>Change Password</span>
                       </Link>
                     )}
+
+                    <Link
+                      to="/saved-insights"
+                      className="profile-dropdown-item"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      <FiBookmark />
+                      <span>Saved Insights</span>
+                    </Link>
 
                     <button
                       onClick={() => {

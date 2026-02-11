@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
@@ -14,20 +14,41 @@ import {
 } from "react-icons/fi";
 import "./Blog.css";
 import { generateBlogPosts } from "./Blog";
+import { useAuth } from "../context/AuthContext";
+import { toggleBookmark, getBookmarks } from "../services/bookmarkService";
 
 const BlogDetail = () => {
   const { id, slug } = useParams();
   const navigate = useNavigate();
   const blogPosts = generateBlogPosts();
+  const { currentUser } = useAuth();
 
   // State for interactions
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [loadingBookmark, setLoadingBookmark] = useState(true);
 
   // 🔒 SAFELY find blog - handle both slug and id params
   const blogId = id || slug;
   const blog = blogPosts.find((post) =>
     post.id === Number(blogId) || post.slug === blogId
   );
+
+  // Check if bookmarked on load
+  useEffect(() => {
+    const checkBookmarkStatus = async () => {
+      if (currentUser && blog) {
+        try {
+          const bookmarks = await getBookmarks(currentUser.uid);
+          setIsBookmarked(bookmarks.includes(blog.id));
+        } catch (error) {
+          console.error("Error fetching bookmarks:", error);
+        }
+      }
+      setLoadingBookmark(false);
+    };
+
+    checkBookmarkStatus();
+  }, [currentUser, blog]);
 
   // ✅ Early return
   if (!blog) {
@@ -72,12 +93,26 @@ const BlogDetail = () => {
   const views = Math.floor(Math.random() * 2000) + 500;
 
   // Handlers
-  const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    if (!isBookmarked) {
-      toast.success("Article saved to bookmarks");
-    } else {
-      toast.success("Article removed from bookmarks");
+  // Handlers
+  const handleBookmark = async () => {
+    if (!currentUser) {
+      toast.error("Please login to bookmark articles");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const isNowBookmarked = await toggleBookmark(currentUser.uid, blog.id);
+      setIsBookmarked(isNowBookmarked);
+
+      if (isNowBookmarked) {
+        toast.success("Article saved to bookmarks");
+      } else {
+        toast.success("Article removed from bookmarks");
+      }
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
+      toast.error("Failed to update bookmark");
     }
   };
 
