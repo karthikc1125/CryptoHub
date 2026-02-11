@@ -1043,8 +1043,11 @@ body::before {
 }
 
 .project-admin-container {
-  background: linear-gradient(165deg, rgba(24, 10, 65, 0.97) 0%, rgba(12, 4, 30, 0.99) 60%, rgba(18, 8, 50, 0.97) 100%);
-  border: 1px solid rgba(147, 51, 234, 0.3);
+  background: 
+    linear-gradient(165deg, rgba(24, 10, 65, 0.97) 0%, rgba(12, 4, 30, 0.99) 60%, rgba(18, 8, 50, 0.97) 100%) padding-box,
+    linear-gradient(90deg, var(--gold-500), var(--primary-500), var(--accent-cyan), var(--gold-500)) border-box;
+  background-size: 100% 100%, 300% 100%;
+  border: 3px solid transparent;
   border-radius: var(--radius-lg);
   padding: 3rem;
   position: relative;
@@ -1054,22 +1057,11 @@ body::before {
     0 0 40px rgba(147, 51, 234, 0.15);
   transition: var(--transition-slow);
   max-width: 640px;
-  margin: 0 auto 3rem;
+  margin: 3rem auto;
+  animation: shimmerWave 4s linear infinite;
 }
 
-/* Animated gradient top border */
-.project-admin-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--gold-500), var(--primary-500), var(--accent-cyan), var(--gold-500));
-  background-size: 300% 100%;
-  animation: shimmerWave 4s linear infinite;
-  z-index: 2;
-}
+
 
 /* Corner accent orb */
 .project-admin-container::after {
@@ -1283,9 +1275,10 @@ body::before {
   }
   
   .project-admin-container {
-    margin: 0 0 2rem;
-    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+    padding: 2rem;
     max-width: 100%;
+    text-align: center;
   }
 
   .project-admin-avatar-wrapper {
