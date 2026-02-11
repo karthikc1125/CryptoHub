@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Signup.css";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { notifyError, notifySuccess } from "../utils/notify";

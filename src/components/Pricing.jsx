@@ -15,7 +15,6 @@ export default function Pricing() {
   const navigate = useNavigate();
   const [billingCycle, setBillingCycle] = useState("monthly");
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
-  const [hoveredPlan, setHoveredPlan] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   // FIXED: Proper scroll handler with cleanup
@@ -213,7 +212,7 @@ export default function Pricing() {
       >
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 lg:gap-12">
           {plans.map((plan) => {
-            const isHovered = hoveredPlan === plan?.name;
+
             const currentPrice = getPrice(plan?.price, billingCycle);
 
             return (
@@ -226,8 +225,6 @@ export default function Pricing() {
                 whileInView="visible"
                 whileHover="hover"
                 viewport={{ once: true }}
-                onHoverStart={() => setHoveredPlan(plan.name)}
-                onHoverEnd={() => setHoveredPlan(null)}
               >
                 {/* Card Background */}
                 <div className="h-full w-full bg-linear-to-br bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-[1.75rem] p-8 flex flex-col relative z-10 border border-white/30 dark:border-gray-700/50">

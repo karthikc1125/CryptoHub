@@ -11,7 +11,7 @@ import {
   FiExternalLink,
 } from "react-icons/fi";
 import "./Blog.css";
-import { generateBlogPosts } from "./Blog";
+import { generateBlogPosts } from "../data/blogData";
 
 const BlogDetail = () => {
   const { id, slug } = useParams();

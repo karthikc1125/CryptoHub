@@ -63,7 +63,7 @@ const getRankFromPoints = (points) => {
 const rankClassCache = new Map();
 const getRankClass = (rank) => {
   if (rankClassCache.has(rank)) return rankClassCache.get(rank);
-  const cls = rank.toLowerCase().replace(/ /g, "-").replace(/[🥇🥈🥉]/g, "").replace(/-$/, "");
+  const cls = rank.toLowerCase().replace(/ /g, "-").replace(/[🥇🥈🥉]/gu, "").replace(/-$/, "");
   rankClassCache.set(rank, cls);
   return cls;
 };

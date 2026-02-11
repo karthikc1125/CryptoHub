@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     // Re-authenticate the user
     await reauthenticateWithCredential(user, credentials);
-  })
+  }, [currentUser])
 
 
   // signup function
