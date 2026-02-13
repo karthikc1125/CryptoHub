@@ -38,6 +38,7 @@ import ContactUs from "./components/ContactUs";
 import FAQ from "./components/FAQ";
 import PageNotFound from "./components/PageNotFound";
 import About from "./components/About";
+import Feedback from "./pages/Feedback";
 
 const App = () => {
 
@@ -170,6 +171,7 @@ const App = () => {
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/contactus" element={<ContactUs />} />
                 <Route path="/faq" element={<FAQ />} />
+                <Route path="/feedback" element={<Feedback />} />
 
                 {/* About Section */}
                 <Route path="/about" element={<About />} />
