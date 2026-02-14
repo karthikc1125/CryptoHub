@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+
 import React, {
   createContext,
   useContext,
@@ -14,13 +14,14 @@ import {
   signOut,
   onAuthStateChanged,
   setPersistence,
-  browserSessionPersistence,
+  browserLocalPersistence,
   reauthenticateWithCredential,
   EmailAuthProvider,
   updatePassword,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
-import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db, googleProvider, isFirebaseConfigured } from "../firebase";
 
 const AuthContext = createContext({});
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
     // Re-authenticate the user
     await reauthenticateWithCredential(user, credentials);
-  })
+  }, [currentUser])
 
 
   // signup function
@@ -68,23 +69,33 @@ export const AuthProvider = ({ children }) => {
     );
     const user = userCredential.user;
 
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      email: user.email,
-      fullName: fullName,
-      createdAt: serverTimestamp(),
-      provider: "email",
+    // Send email verification before Firestore writes so offline errors do not block it
+    await sendEmailVerification(user, {
+      url: window.location.origin + "/dashboard",
+      handleCodeInApp: false,
     });
 
-    // Initialize leaderboard entry for new user
-    await setDoc(doc(db, "leaderboard", user.uid), {
-      uid: user.uid,
-      displayName: fullName,
-      photoURL: null,
-      score: 0,
-      activitiesCount: 0,
-      lastUpdated: serverTimestamp(),
-    });
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        fullName: fullName,
+        createdAt: serverTimestamp(),
+        provider: "email",
+      });
+
+      // Initialize leaderboard entry for new user
+      await setDoc(doc(db, "leaderboard", user.uid), {
+        uid: user.uid,
+        displayName: fullName,
+        photoURL: null,
+        score: 0,
+        activitiesCount: 0,
+        lastUpdated: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error("Error saving user profile data:", error);
+    }
 
     return userCredential;
   }, []);
@@ -96,7 +107,7 @@ export const AuthProvider = ({ children }) => {
         "Firebase is not configured. Please add Firebase credentials to use authentication."
       );
     }
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
@@ -112,7 +123,7 @@ export const AuthProvider = ({ children }) => {
         "Firebase is not configured. Please add Firebase credentials to use authentication."
       );
     }
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     const userCredential = await signInWithPopup(auth, googleProvider);
     const user = userCredential.user;
 
@@ -165,6 +176,47 @@ export const AuthProvider = ({ children }) => {
 
   }, [reauthenticateUser]);
 
+  //   send email verification
+  const sendVerificationEmail = useCallback(async () => {
+    if (!isFirebaseConfigured() || !auth?.currentUser) {
+      throw new Error('User is not authenticated');
+    }
+
+    await sendEmailVerification(auth.currentUser, {
+      url: window.location.origin + '/dashboard',
+      handleCodeInApp: false,
+    });
+  }, []);
+
+  //   reload user and check verification status
+  const reloadUserVerificationStatus = useCallback(async () => {
+    if (!isFirebaseConfigured() || !auth?.currentUser) {
+      throw new Error('User is not authenticated');
+    }
+    await auth.currentUser.reload();
+    const user = auth.currentUser;
+    // Update current user state with fresh data
+    if (user) {
+      try {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setCurrentUser({
+            ...user,
+            fullName: userData.fullName,
+          });
+        } else {
+          setCurrentUser(user);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+        setCurrentUser(user);
+      }
+    }
+
+    return user.emailVerified;
+  }, []);
+
   //   reset Password function
   const resetPassword = useCallback(async (email) => {
     if (!isFirebaseConfigured() || !auth) {
@@ -180,7 +232,7 @@ export const AuthProvider = ({ children }) => {
     if (!auth?.currentUser) return false;
 
     // check if user has email/password as a  provider
-    return auth.currentUser.providerData.some(
+    return auth.currentUser?.providerData?.some(
       (provider) => provider.providerId === 'password');
   }, []);
 
@@ -193,22 +245,24 @@ export const AuthProvider = ({ children }) => {
 
     // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      // Set user immediately and stop loading - don't wait for Firestore
+      setCurrentUser(user);
+      setLoading(false);
+
       if (user) {
+        // Fetch additional user data from Firestore in the background
         try {
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
             console.log("Fetched user data from Firestore:", userData);
+            // Update user with Firestore data
             setCurrentUser({
               ...user,
               fullName: userData.fullName,
             });
-            console.log("Current user after merge:", {
-              ...user,
-              fullName: userData.fullName,
-            });
 
-            // Initialize leaderboard entry if it doesn't exist
+            // Initialize leaderboard entry if it doesn't exist (in background)
             const leaderboardDoc = await getDoc(
               doc(db, "leaderboard", user.uid)
             );
@@ -222,19 +276,41 @@ export const AuthProvider = ({ children }) => {
                 lastUpdated: serverTimestamp(),
               });
             }
-          } else {
-            setCurrentUser(user);
           }
         } catch (error) {
           console.error("Error fetching user profile:", error);
-          setCurrentUser(user);
+          // User is already set from Firebase auth, just log the error
         }
-      } else {
-        setCurrentUser(null);
       }
-      setLoading(false);
     });
     return unsubscribe;
+  }, []);
+
+  //   update user profile function
+  const updateUserProfile = useCallback(async (uid, data) => {
+    if (!isFirebaseConfigured() || !db) {
+      throw new Error("Firebase is not configured.");
+    }
+
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, data);
+
+    // Update local state immediately
+    setCurrentUser((prev) => ({
+      ...prev,
+      ...data,
+      fullName: data.fullName || prev.fullName
+    }));
+
+    // If name changed, update leaderboard too
+    if (data.fullName) {
+      try {
+        const leaderboardRef = doc(db, "leaderboard", uid);
+        await updateDoc(leaderboardRef, { displayName: data.fullName });
+      } catch (error) {
+        console.error("Failed to update leaderboard name:", error);
+      }
+    }
   }, []);
 
   const value = useMemo(
@@ -248,15 +324,43 @@ export const AuthProvider = ({ children }) => {
       ChangePassword,
       resetPassword,
       isEmailProvider,
+      sendVerificationEmail,
+      reloadUserVerificationStatus,
+      updateUserProfile,
     }),
-    [currentUser, loading, signup, login, loginWithGoogle, logout, ChangePassword, resetPassword, isEmailProvider]
+    [currentUser, loading, signup, login, loginWithGoogle, logout, ChangePassword, resetPassword, isEmailProvider, sendVerificationEmail, reloadUserVerificationStatus, updateUserProfile]
   );
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {loading ? (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#0a0a0f'
+        }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            border: '4px solid rgba(0, 243, 255, 0.2)',
+            borderTop: '4px solid #00f3ff',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite'
+          }} />
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };
 
-export default AuthContext;
+

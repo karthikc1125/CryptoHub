@@ -1401,6 +1401,7 @@
   padding: 0.875rem 1rem;
   font-size: 0.95rem;
   font-weight: 600;
+  display: block;
 }
 
 .mobile-auth .navbar-btn-login {

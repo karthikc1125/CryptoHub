@@ -1,47 +1,47 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { useContext } from "react";
-import { CoinContext } from "../context/CoinContext";
+import { CoinContext } from "../context/CoinContextInstance";
 import "./MarketFilters.css";
 
 const MarketFilters = () => {
-    const {selectedFilters, setSelectedFilters} = useContext(CoinContext);
-    const [open, setOpen] = useState(false);
+  const { selectedFilters, setSelectedFilters } = useContext(CoinContext);
+  const [open, setOpen] = useState(false);
 
-   const toggleFilter = (filter) => {
-  // Clicking "all"
-  if (filter === "all") {
-    setSelectedFilters(["all"]);
-    return;
-  }
-
-  setSelectedFilters((prev) => {
-    let updated = [...prev];
-
-    // Remove "all" if another filter is selected
-    updated = updated.filter((f) => f !== "all");
-
-    if (updated.includes(filter)) {
-      // Remove filter
-      updated = updated.filter((f) => f !== filter);
-    } else {
-      // Add filter
-      updated.push(filter);
+  const toggleFilter = (filter) => {
+    // Clicking "all"
+    if (filter === "all") {
+      setSelectedFilters(["all"]);
+      return;
     }
 
-    // If nothing selected, reset to "all"
-    if (updated.length === 0) {
-      return ["all"];
-    }
+    setSelectedFilters((prev) => {
+      let updated = [...prev];
 
-    return updated;
-  });
-};
+      // Remove "all" if another filter is selected
+      updated = updated.filter((f) => f !== "all");
+
+      if (updated.includes(filter)) {
+        // Remove filter
+        updated = updated.filter((f) => f !== filter);
+      } else {
+        // Add filter
+        updated.push(filter);
+      }
+
+      // If nothing selected, reset to "all"
+      if (updated.length === 0) {
+        return ["all"];
+      }
+
+      return updated;
+    });
+  };
 
   return (
     <div className="market-filters-wrapper">
       {/* Mobile toggle button */}
       <button className="filter-toggle" onClick={() => setOpen(!open)}>
-         {open ? "✕ Filters" : "☰ Filters"}
+        {open ? "✕ Filters" : "☰ Filters"}
       </button>
 
       <div className={`market-filters ${open ? "open" : "closed"}`}>

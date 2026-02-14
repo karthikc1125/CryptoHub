@@ -55,8 +55,9 @@
   color: #b8bdd0;
   font-size: 15px;
   line-height: 1.6;
-  margin-bottom: 24px;
-  max-width: 320px;
+  margin: 0 auto 24px;   
+  max-width: 400px;      
+
 }
 
 /* Payment Methods */
@@ -290,6 +291,17 @@ button:hover{
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .footer-brand {
+  grid-column: span 3;
+  text-align: center;
+}
+
+.footer-brand p {
+  margin: 0 auto 24px;
+  max-width: 400px;
+  text-align: center;
+}
+
   .footer-main {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 32px;

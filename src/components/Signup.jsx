@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Signup.css";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { notifyError, notifySuccess } from "../utils/notify";
@@ -85,8 +84,8 @@ function Signup() {
 
       try {
         await signup(formData.email, formData.password, formData.fullName);
-          notifySuccess("Signed up successfully");
-       setTimeout(() => navigate("/dashboard"), 1500);
+        notifySuccess("Account created! Please check your email to verify your account.");
+        setTimeout(() => navigate("/verify-email"), 1500);
       } catch (error) {
         console.error("Signup error:", error);
 

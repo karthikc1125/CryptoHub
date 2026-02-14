@@ -90,9 +90,9 @@ const Footer = () => {
               <li><Link to="/pricing">Pricing</Link></li>
               <li><Link to="/portfolio">Portfolio</Link></li>
               <li><Link to="/api">API Access</Link></li>
+              <li><Link to="/feedback">Feedback</Link></li>
             </ul>
           </div>
-          
 
           {/* Newsletter */}
           <div className="footer-newsletter">
