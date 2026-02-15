@@ -65,14 +65,14 @@ function Login() {
       try {
         const userCredential = await login(formData.email, formData.password);
         const user = userCredential.user;
-        
+
         // Check if email is verified
         if (!user.emailVerified) {
           notifyInfo("Please verify your email address to continue.");
           setTimeout(() => navigate("/verify-email"), 1500);
           return;
         }
-        
+
         notifySuccess("Logged in successfully");
         setTimeout(() => navigate("/dashboard"), 1500);
       } catch (error) {
@@ -106,7 +106,7 @@ function Login() {
     try {
       await loginWithGoogle();
       notifySuccess("Logged in successfully with Google");
-     setTimeout(() => navigate("/dashboard"), 1500);
+      setTimeout(() => navigate("/dashboard"), 1500);
     } catch (error) {
       console.error("Google login error:", error);
       let errorMessage = "Failed to login with Google. Please try again.";
@@ -184,6 +184,7 @@ function Login() {
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={loading}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>

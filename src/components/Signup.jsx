@@ -115,8 +115,8 @@ function Signup() {
 
     try {
       await loginWithGoogle();
-        notifySuccess("Signed up successfully with Google");
-     setTimeout(() => navigate("/dashboard"), 1500);
+      notifySuccess("Signed up successfully with Google");
+      setTimeout(() => navigate("/dashboard"), 1500);
     } catch (error) {
       console.error("Google signup error:", error);
       let errorMessage = "Failed to sign up with Google. Please try again.";
@@ -127,7 +127,7 @@ function Signup() {
         errorMessage = "Network error. Please check your connection";
       }
 
-     notifyError(errorMessage);
+      notifyError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -210,6 +210,7 @@ function Signup() {
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={loading}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
@@ -237,6 +238,7 @@ function Signup() {
                 className="toggle-password"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 disabled={loading}
+                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
               >
                 {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
               </button>

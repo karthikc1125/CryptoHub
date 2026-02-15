@@ -160,7 +160,7 @@ const Home = () => {
                 list="coinlist"
                 placeholder="Search Tokens..."
               />
-              <button type="button" className="filter-trigger" onClick={() => setShowFilters(!showFilters)}>
+              <button type="button" className="filter-trigger" onClick={() => setShowFilters(!showFilters)} aria-label="Filter markets">
                 <FiFilter />
               </button>
             </form>

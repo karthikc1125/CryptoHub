@@ -275,6 +275,7 @@ const Action = ({ icon, title, onClick, active }) => (
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
     title={title}
+    aria-label={title}
     onClick={onClick}
   >
     {icon}

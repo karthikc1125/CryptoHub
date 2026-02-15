@@ -125,6 +125,7 @@ const SavedInsights = () => {
                                             onClick={(e) => handleRemoveBookmark(e, post.id)}
                                             className="p-2 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-red-500/80 transition-colors"
                                             title="Remove from saved"
+                                            aria-label="Remove from saved"
                                         >
                                             <FiBookmark className="fill-current" />
                                         </button>

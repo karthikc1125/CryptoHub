@@ -162,16 +162,17 @@ export default function Pricing() {
                 onClick={toggleBillingCycle}
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.05 }}
+                aria-label="Toggle billing cycle"
               >
                 <motion.div
                   className="absolute top-2 w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg flex items-center justify-center shadow-purple-500/50"
-                  animate={{ 
-                    x: billingCycle === 'yearly' ? 56 : 0 
+                  animate={{
+                    x: billingCycle === 'yearly' ? 56 : 0
                   }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 300, 
-                    damping: 25 
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25
                   }}
                 >
                   <FiZap className="text-white w-5 h-5" />
