@@ -284,8 +284,8 @@
 }
 
 .logo-img {
+  height: 60%;
   width: auto;
-  height: 36px;  
   object-fit: contain;
   filter: drop-shadow(0 0 6px rgba(0, 243, 255, 0.8))
     drop-shadow(0 0 12px rgba(176, 38, 255, 0.4));
