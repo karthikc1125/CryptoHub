@@ -2,10 +2,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar';
-import * as AuthContext from '../../context/AuthContext';
+import * as AuthContext from '../../context/AuthProvider';
 
 // Mock the AuthContext
-vi.mock('../../context/AuthContext', () => ({
+vi.mock('../../context/AuthProvider', () => ({
     useAuth: vi.fn(),
 }));
 

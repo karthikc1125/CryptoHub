@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import "./ChangePassword.css";
-import { notifyError, notifySuccess } from "../utils/notify";
+import { notifyError, notifySuccess } from "../../utils/notify";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");

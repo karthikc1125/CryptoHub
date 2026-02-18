@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCoinNews, analyzeSentiment } from '../utils/newsService';
+import { fetchCoinNews, analyzeSentiment } from '../../utils/newsService';
 import './NewsPanel.css';
 
 const NewsPanel = ({ coinId, coinName }) => {

@@ -1,6 +1,6 @@
 import React from "react";
-import { useLeaderboard } from "../context/LeaderboardContext";
-import { useAuth } from "../context/AuthContext";
+import { useLeaderboard } from "../../context/LeaderboardContext";
+import { useAuth } from "../../context/AuthProvider";
 import "./Leaderboard.css";
 
 function Leaderboard() {

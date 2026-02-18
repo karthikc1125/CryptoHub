@@ -15,19 +15,14 @@ import {
 } from "chart.js";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Filler);
+import { topCoins } from "../../config/coins";
 
 const Features = () => {
   /* 
     Define coin data with brand-specific neon colors for the graph 
     BTC: Orange, ETH: Blue-Purple, SOL: Green, BNB: Yellow, ADA: Cyan Blue
   */
-  const topCoins = [
-    { id: "bitcoin", name: "Bitcoin", symbol: "BTC", color: "#F7931A" },
-    { id: "ethereum", name: "Ethereum", symbol: "ETH", color: "#627EEA" },
-    { id: "solana", name: "Solana", symbol: "SOL", color: "#14F195" },
-    { id: "binancecoin", name: "BNB", symbol: "BNB", color: "#F3BA2F" },
-    { id: "cardano", name: "Cardano", symbol: "ADA", color: "#2979FF" },
-  ];
+
 
   const [selectedCoin, setSelectedCoin] = useState(topCoins[0].id);
   const [days, setDays] = useState(1);
@@ -126,6 +121,7 @@ const Features = () => {
               value={selectedCoin}
               onChange={(e) => setSelectedCoin(e.target.value)}
               className="cosmic-select"
+              aria-label="Select Coin"
             >
               {topCoins.map((coin) => (
                 <option key={coin.id} value={coin.id}>
@@ -140,6 +136,7 @@ const Features = () => {
               value={days}
               onChange={(e) => setDays(Number(e.target.value))}
               className="cosmic-select"
+              aria-label="Select Time Range"
             >
               {timeRanges.map((range) => (
                 <option key={range.value} value={range.value}>
@@ -150,113 +147,113 @@ const Features = () => {
           </div>
         </div>
 
-      {/* CARD */}
-      <div className="features-card">
-        {loading ? (
-          <div className="features-loading">
-            <div className="loader"></div>
-            <p className="loading-text">Loading {topCoins.find(c => c.id === selectedCoin)?.name} chart...</p>
-          </div>
-        ) : prices.length === 0 ? (
-          <div className="no-data">
-            <h3>No data available</h3>
-            <p>Please try a different coin or time range</p>
-          </div>
-        ) : (
-          <div className="chart-wrapper">
-            <Line 
-              data={chartData}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: {
-                    display: false
+        {/* CARD */}
+        <div className="features-card">
+          {loading ? (
+            <div className="features-loading">
+              <div className="loader"></div>
+              <p className="loading-text">Loading {topCoins.find(c => c.id === selectedCoin)?.name} chart...</p>
+            </div>
+          ) : prices.length === 0 ? (
+            <div className="no-data">
+              <h3>No data available</h3>
+              <p>Please try a different coin or time range</p>
+            </div>
+          ) : (
+            <div className="chart-wrapper">
+              <Line
+                data={chartData}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      display: false
+                    },
+                    tooltip: {
+                      mode: 'index',
+                      intersect: false,
+                      backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                      titleColor: '#f8fafc',
+                      bodyColor: currentCoin.color,
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                      borderWidth: 1,
+                      padding: 12,
+                      cornerRadius: 8,
+                      titleFont: { family: 'Outfit', size: 14, weight: 'bold' },
+                      bodyFont: { family: 'JetBrains Mono', size: 13 },
+                      callbacks: {
+                        label: function (context) {
+                          let label = context.dataset.label || '';
+                          if (label) {
+                            label = 'Price: ';
+                          }
+                          if (context.parsed.y !== null) {
+                            label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y);
+                          }
+                          return label;
+                        }
+                      }
+                    }
                   },
-                  tooltip: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: '#64748b',
+                        font: { family: 'JetBrains Mono', size: 11 },
+                        maxTicksLimit: 6,
+                        maxRotation: 0
+                      },
+                      grid: {
+                        color: 'rgba(255, 255, 255, 0.03)',
+                        drawBorder: false,
+                      }
+                    },
+                    y: {
+                      position: 'right',
+                      ticks: {
+                        color: '#64748b',
+                        font: { family: 'JetBrains Mono', size: 11 },
+                        callback: function (value) {
+                          return '₹' + value.toLocaleString();
+                        }
+                      },
+                      grid: {
+                        color: 'rgba(255, 255, 255, 0.03)',
+                        drawBorder: false,
+                      }
+                    }
+                  },
+                  interaction: {
                     mode: 'index',
                     intersect: false,
-                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                    titleColor: '#f8fafc',
-                    bodyColor: currentCoin.color,
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
-                    borderWidth: 1,
-                    padding: 12,
-                    cornerRadius: 8,
-                    titleFont: { family: 'Outfit', size: 14, weight: 'bold' },
-                    bodyFont: { family: 'JetBrains Mono', size: 13 },
-                    callbacks: {
-                      label: function (context) {
-                        let label = context.dataset.label || '';
-                        if (label) {
-                          label = 'Price: ';
-                        }
-                        if (context.parsed.y !== null) {
-                          label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y);
-                        }
-                        return label;
-                      }
-                    }
-                  }
-                },
-                scales: {
-                  x: {
-                    ticks: {
-                      color: '#64748b',
-                      font: { family: 'JetBrains Mono', size: 11 },
-                      maxTicksLimit: 6,
-                      maxRotation: 0
-                    },
-                    grid: {
-                      color: 'rgba(255, 255, 255, 0.03)',
-                      drawBorder: false,
-                    }
                   },
-                  y: {
-                    position: 'right',
-                    ticks: {
-                      color: '#64748b',
-                      font: { family: 'JetBrains Mono', size: 11 },
-                      callback: function (value) {
-                        return '₹' + value.toLocaleString();
-                      }
-                    },
-                    grid: {
-                      color: 'rgba(255, 255, 255, 0.03)',
-                      drawBorder: false,
-                    }
+                  hover: {
+                    mode: 'index',
+                    intersect: false
                   }
-                },
-                interaction: {
-                  mode: 'index',
-                  intersect: false,
-                },
-                hover: {
-                  mode: 'index',
-                  intersect: false
-                }
-              }}
-            />
-          </div>
-        )}
-      </div>
-
-      {/* TOP 5 COINS DISPLAY */}
-      <div className="top-coins-display">
-        <h3 className="top-coins-title">Top 5 Coins</h3>
-        <div className="coins-grid">
-          {topCoins.map((coin) => (
-            <div 
-              key={coin.id}
-              className={`coin-item ${selectedCoin === coin.id ? 'active' : ''}`}
-              onClick={() => setSelectedCoin(coin.id)}
-            >
-              <span className="coin-symbol">{coin.symbol}</span>
-              <span className="coin-name">{coin.name}</span>
+                }}
+              />
             </div>
-          ))}
+          )}
         </div>
-      </div>
+
+        {/* TOP 5 COINS DISPLAY */}
+        <div className="top-coins-display">
+          <h3 className="top-coins-title">Top 5 Coins</h3>
+          <div className="coins-grid">
+            {topCoins.map((coin) => (
+              <div
+                key={coin.id}
+                className={`coin-item ${selectedCoin === coin.id ? 'active' : ''}`}
+                onClick={() => setSelectedCoin(coin.id)}
+              >
+                <span className="coin-symbol">{coin.symbol}</span>
+                <span className="coin-name">{coin.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </motion.div>
 
       <div className="features-note">

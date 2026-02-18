@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthProvider";
 import { useTheme } from "../../context/ThemeContext";
 import { CoinContext } from "../../context/CoinContextInstance";
 

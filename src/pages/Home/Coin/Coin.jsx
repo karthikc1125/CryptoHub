@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Coin.css";
 import { CoinContext } from "../../../context/CoinContextInstance";
-import LineChart from "../../../components/LineChart";
-import NewsPanel from "../../../components/NewsPanel";
+import LineChart from "../../../components/Dashboard/LineChart";
+import NewsPanel from "../../../components/Dashboard/NewsPanel";
 
 const Coin = () => {
   const { coinId } = useParams();
@@ -87,7 +87,7 @@ const Coin = () => {
         }
 
         const data = await response.json();
-        console.log("Historical data:", data);
+
         setHistoricalData(data);
         setHistoryLoading(false);
       } catch (err) {

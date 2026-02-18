@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Blog.css";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { generateBlogPosts } from "../data/blogData";
+import { generateBlogPosts } from "../../data/blogData";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 export default function Blog() {

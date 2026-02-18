@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthProvider";
 import "./ForgotPassword.css";
 import { motion } from "framer-motion";
 import { FiMail, FiArrowLeft, FiCheckCircle } from "react-icons/fi";
-import { notifyError, notifySuccess } from "../utils/notify";
+import { notifyError, notifySuccess } from "../../utils/notify";
 
 function ForgotPassword() {
   const navigate = useNavigate();

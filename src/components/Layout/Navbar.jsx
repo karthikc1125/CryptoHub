@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthProvider";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FiLock, FiUser, FiLogOut, FiMail, FiBookmark } from "react-icons/fi";
 import "./Navbar.css";

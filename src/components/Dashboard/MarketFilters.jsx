@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useContext } from "react";
-import { CoinContext } from "../context/CoinContextInstance";
+import { CoinContext } from "../../context/CoinContextInstance";
 import "./MarketFilters.css";
 
 const MarketFilters = () => {
