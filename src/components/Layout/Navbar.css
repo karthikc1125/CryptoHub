@@ -224,6 +224,7 @@
 .navbar-logo:hover {
   transform: translateY(-3px) scale(1.02);
   background-position: 100% 50%;
+  text-decoration: none;
   filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.4));
 }
 
@@ -368,11 +369,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(176, 38, 255, 0.1) 0%,
-    rgba(0, 243, 255, 0.05) 100%
-  );
+  background: transparent;
   border-radius: 10px;
   transform: scaleX(0);
   transform-origin: right;
@@ -383,6 +380,7 @@
 .navbar-link:hover {
   color: #ffffff;
   transform: translateY(-3px) scale(1.05);
+  text-decoration: none;
   text-shadow:
     0 0 10px rgba(0, 243, 255, 0.5),
     0 0 20px rgba(176, 38, 255, 0.3);
@@ -391,6 +389,7 @@
 .navbar-item:hover .navbar-link {
   color: #ffffff;
   transform: translateY(-3px) scale(1.05);
+  text-decoration: none;
   text-shadow:
     0 0 10px rgba(0, 243, 255, 0.5),
     0 0 20px rgba(176, 38, 255, 0.3);
@@ -400,6 +399,7 @@
 .navbar-link:active {
   color: #ffffff;
   transform: translateY(-3px) scale(1.05);
+  text-decoration: none;
   text-shadow:
     0 0 10px rgba(0, 243, 255, 0.5),
     0 0 20px rgba(176, 38, 255, 0.3);
@@ -490,7 +490,7 @@
     0 4px 20px rgba(176, 38, 255, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   animation: borderGlow 3s ease infinite;
-  border: 1px solid rgba(0, 243, 255, 0.2);
+  border: none;
 }
 
 .navbar-link.active::after {
@@ -609,6 +609,7 @@
     0 8px 32px rgba(0, 243, 255, 0.15),
     0 0 0 1px rgba(0, 243, 255, 0.1);
   color: #00f3ff;
+  text-decoration: none;
   text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
 }
 
@@ -667,6 +668,7 @@
     0 0 60px rgba(0, 243, 255, 0.2);
   animation: shimmer 1.5s linear infinite;
   color: #ffffff;
+  text-decoration: none;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
@@ -1210,6 +1212,7 @@
 .mobile-menu-link.active {
   color: #ffffff;
   transform: translateY(-2px) scale(1.02);
+  text-decoration: none;
   text-shadow:
     0 0 10px rgba(0, 243, 255, 0.5),
     0 0 20px rgba(176, 38, 255, 0.3);
@@ -1231,6 +1234,7 @@
 .mobile-menu-item:hover .mobile-menu-link {
   color: #ffffff;
   transform: translateY(-2px) scale(1.02);
+  text-decoration: none;
   text-shadow:
     0 0 10px rgba(0, 243, 255, 0.5),
     0 0 20px rgba(176, 38, 255, 0.3);
