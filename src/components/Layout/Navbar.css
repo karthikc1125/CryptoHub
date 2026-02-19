@@ -114,7 +114,7 @@
 
 /* Navbar Container */
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -124,7 +124,7 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border-color);
   height: 86px;          
-  padding: 0 2%;         
+  padding: 0 1.5rem;         
   display: flex;
   align-items: center;   
   z-index: 1000;
@@ -132,6 +132,31 @@
   /* Entrance animation */
   animation: navbarSlideDown 0.6s var(--transition-elastic) forwards;
   overflow: visible;
+}
+
+/* Responsive Navbar Padding to match App Container */
+@media (max-width: 1440px) {
+  .navbar {
+    padding: 0 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
 }
 
 /* Subtle border glow animation on navbar */
@@ -1536,11 +1561,11 @@
 /* Mobile Only */
 @media (max-width: 767px) {
   .navbar {
-    padding: 0.75rem 4%;
+    padding: 0 0.75rem;
   }
 
   .navbar.scrolled {
-    padding: 0.65rem 4%;
+    padding: 0 0.75rem;
   }
 
   .navbar-content {
@@ -1691,11 +1716,11 @@
 /* Desktop */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .navbar {
-    padding: 0.875rem 3%;
+    padding: 0 1.25rem;
   }
 
   .navbar.scrolled {
-    padding: 0.65rem 3%;
+    padding: 0 1.25rem;
   }
 
   .navbar-toggle {
@@ -1756,13 +1781,13 @@
 }
 
 /* Large Desktop */
-@media (min-width: 1280px) {
+@media (min-width: 1280px) and (max-width: 1440px) {
   .navbar {
-    padding: 0.875rem 3%;
+    padding: 0 1.25rem;
   }
 
   .navbar.scrolled {
-    padding: 0.65rem 3%;
+    padding: 0 1.25rem;
   }
 
   .navbar-content {
@@ -1770,6 +1795,20 @@
     max-width: 1400px;
     gap: 2rem;
   }
+}
+
+@media (min-width: 1441px) {
+  .navbar {
+    padding: 0 1.5rem;
+  }
+
+  .navbar.scrolled {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Original large desktop styles continued... */
+@media (min-width: 1280px) {
 
   .navbar-link {
     padding: 0.5rem 1rem;
