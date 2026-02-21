@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext, useRef, lazy, Suspense } from "react";
 import Lenis from "lenis";
 import Navbar from "@/components/Layout/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -42,6 +42,7 @@ import CryptoChatbot from "./CryptoChatbot/CryptoChatbot";
 import Feedback from "./pages/Feedback";
 import TrendingCoins from "@/pages/TrendingCoins";
 import NewListings from "@/pages/NewListings";
+const AIBlogPage = lazy(() => import("@/pages/AIBlog/AIBlogPage"));
 
 
 const App = () => {
@@ -134,6 +135,7 @@ const App = () => {
                 {/* Blog detail route supporting both slug and id patterns */}
                 <Route path="/blog/:slug" element={<BlogDetail />} />
                 <Route path="/blog/article/:id" element={<BlogDetail />} />
+                <Route path="/ai-blog" element={<Suspense fallback={<div style={{ minHeight: '100vh', background: '#0a0a0a' }} />}><AIBlogPage /></Suspense>} />
                 <Route path="/trending" element={<TrendingCoins />} />
                 <Route path="/new-listings" element={<NewListings />} />
 
