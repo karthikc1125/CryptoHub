@@ -126,6 +126,7 @@
   height: 86px;          
   padding: 0 2%;         
   display: flex;
+  margin-right: 5px;
   align-items: center;   
   z-index: 1000;
   transition: all 0.4s var(--transition-smooth);
@@ -204,7 +205,7 @@
   height: 100%;
   gap: 0.875rem;
   text-decoration: none;
-  margin-left: -50px;
+  margin-left: 0;
   flex-shrink: 0;
   font-weight: 800;
   font-size: 1.35rem;
@@ -285,7 +286,7 @@
 }
 
 .logo-img {
-  height: 60%;
+  height: 88px;
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 0 6px rgba(0, 243, 255, 0.8))
@@ -1121,7 +1122,7 @@
 /* Mobile Menu Dropdown */
 .mobile-menu {
   position: fixed;
-  top: 64px;
+  top: 86px;
   left: 0;
   right: 0;
   width: 100%;
@@ -1544,9 +1545,13 @@
   }
 
   .navbar-content {
-    gap: 1rem;
-    grid-template-columns: auto 1fr;
-  }
+  display: flex;
+  justify-content: space-between;
+  padding-right: 1rem;
+  align-items: center;
+  gap: 1rem;
+}
+
 
   .mobile-only {
     display: flex;
@@ -1577,12 +1582,13 @@
   }
 
   .navbar-logo {
-    font-size: 1.25rem;
+    font-size: 1.6rem;
   }
 
   .navbar-logo-icon {
-    width: 40px;
-    height: 40px;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
   }
 
   .navbar-actions {
@@ -1626,9 +1632,12 @@
   }
 
   .navbar-content {
-    gap: 1rem;
-    grid-template-columns: auto 1fr;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
 
   .navbar-toggle {
     display: flex;
@@ -2018,6 +2027,13 @@
 
 /* Mobile Dropdown Styles */
 @media (max-width: 767px) {
+  .navbar-content {
+    transform: translateX(-30px);
+  }
+  .navbar {
+  height: auto;
+}
+
   .dropdown-trigger {
     width: 100%;
     justify-content: space-between;
