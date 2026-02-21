@@ -1,12 +1,12 @@
 
 import React, {
-  createContext,
   useContext,
   useState,
   useEffect,
   useMemo,
   useCallback,
 } from "react";
+import AuthContext from "./AuthContext";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -24,7 +24,7 @@ import {
 import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db, googleProvider, isFirebaseConfigured } from "../firebase";
 
-const AuthContext = createContext({});
+
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -255,7 +255,7 @@ export const AuthProvider = ({ children }) => {
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            console.log("Fetched user data from Firestore:", userData);
+
             // Update user with ALL Firestore data so profile fields persist
             setCurrentUser({
               ...user,
@@ -298,7 +298,7 @@ export const AuthProvider = ({ children }) => {
     // Handle Image Upload if file is provided
     if (imageFile) {
       try {
-        console.log("Starting avatar processing...");
+
 
         // Step 1: Compress the image client-side using canvas (150x150 JPEG)
         const compressedBase64 = await new Promise((resolve, reject) => {
@@ -323,7 +323,7 @@ export const AuthProvider = ({ children }) => {
 
               // Convert to base64 JPEG (quality 0.7 = ~10-20KB)
               const base64 = canvas.toDataURL('image/jpeg', 0.7);
-              console.log("Image compressed, base64 length:", base64.length);
+
               URL.revokeObjectURL(img.src); // Clean up
               resolve(base64);
             } catch (canvasErr) {
@@ -350,9 +350,7 @@ export const AuthProvider = ({ children }) => {
 
     // Save to Firestore
     const userRef = doc(db, "users", uid);
-    console.log("Saving profile data to Firestore...", Object.keys(data));
     await updateDoc(userRef, data);
-    console.log("Profile saved to Firestore successfully.");
 
     // Update local state immediately
     setCurrentUser((prev) => ({
@@ -398,27 +396,8 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={value}>
       {loading ? (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '100vh',
-          backgroundColor: '#0a0a0f'
-        }}>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            border: '4px solid rgba(0, 243, 255, 0.2)',
-            borderTop: '4px solid #00f3ff',
-            borderRadius: '50%',
-            animation: 'spin 0.8s linear infinite'
-          }} />
-          <style>{`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}</style>
+        <div className="flex items-center justify-center min-h-screen bg-[#0a0a0f]">
+          <div className="w-[50px] h-[50px] border-4 border-[#00f3ff20] border-t-[#00f3ff] rounded-full animate-spin" />
         </div>
       ) : (
         children

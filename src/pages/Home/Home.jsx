@@ -4,7 +4,7 @@ import { CoinContext } from "../../context/CoinContextInstance";
 import { Link } from "react-router-dom";
 import { FiSearch, FiArrowUpRight, FiArrowDownRight, FiFilter, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { motion } from "framer-motion";
-import MarketFilters from "../../components/MarketFilters";
+import MarketFilters from "../../components/Dashboard/MarketFilters";
 
 const Home = () => {
   const { allCoin, filteredCoins, currency } = useContext(CoinContext);

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
-import { useActivity } from "../context/ActivityContext";
-import { useLeaderboard } from "../context/LeaderboardContext";
+import { useActivity } from "../../context/ActivityContext";
+import { useLeaderboard } from "../../context/LeaderboardContext";
 
 const ActivityTracker = () => {
   const location = useLocation();

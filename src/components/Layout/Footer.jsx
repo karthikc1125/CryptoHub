@@ -77,8 +77,8 @@ const Footer = () => {
             <ul>
               <li><Link to="/trending">Trending Coins</Link></li>
               <li><Link to="/gainers">Top Gainers</Link></li>
-              <li><Link to="/losers">Top Losers</Link></li>
-              <li><Link to="/new">New Listings</Link></li>
+              <li><Link to="/top-losers">Top Losers</Link></li>
+              <li><Link to="/new-listings">New Listings</Link></li>
             </ul>
           </div>
 
@@ -89,7 +89,7 @@ const Footer = () => {
               <li><Link to="/features">Features</Link></li>
               <li><Link to="/pricing">Pricing</Link></li>
               <li><Link to="/portfolio">Portfolio</Link></li>
-              <li><Link to="/api">API Access</Link></li>
+              <li><Link to="/api-access">API Access</Link></li>
               <li><Link to="/feedback">Feedback</Link></li>
             </ul>
           </div>

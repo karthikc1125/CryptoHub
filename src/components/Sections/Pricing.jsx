@@ -1,5 +1,5 @@
 // Pricing.jsx - FIXED & PRODUCTION READY VERSION
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +8,7 @@ import {
   FiCheck, FiX, FiInfo, FiArrowRight, FiStar, FiShield, FiClock,
   FiUsers, FiTrendingUp, FiZap, FiPlus
 } from "react-icons/fi";
-import { plans, faqs, comparisonFeatures } from "../data/pricingPlansData";
+import { plans, faqs, comparisonFeatures } from "../../data/pricingPlansData";
 
 export default function Pricing() {
   const { isDark } = useTheme();

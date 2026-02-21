@@ -13,9 +13,9 @@ import {
   FiExternalLink,
 } from "react-icons/fi";
 import "./Blog.css";
-import { generateBlogPosts } from "../data/blogData";
-import { useAuth } from "../context/AuthContext";
-import { toggleBookmark, getBookmarks } from "../services/bookmarkService";
+import { generateBlogPosts } from "../../data/blogData";
+import { useAuth } from "../../context/AuthProvider";
+import { toggleBookmark, getBookmarks } from "../../services/bookmarkService";
 
 const BlogDetail = () => {
   const { id, slug } = useParams();

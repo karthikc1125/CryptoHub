@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from "../../context/AuthProvider";
 import { useTheme } from '../../context/ThemeContext';
 import { notifySuccess, notifyError } from '../../utils/notify'; // Assuming this exists based on Login.jsx
 import { FiUser, FiMail, FiPhone, FiCalendar, FiMapPin, FiActivity, FiDollarSign, FiSave, FiShield, FiCamera } from 'react-icons/fi';

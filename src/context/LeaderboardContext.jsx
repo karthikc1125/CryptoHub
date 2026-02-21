@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { collection, query, orderBy, limit, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, serverTimestamp } from "firebase/firestore";
 import { db, isFirebaseConfigured } from "../firebase";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./AuthProvider";
 
 const LeaderboardContext = createContext({});
 

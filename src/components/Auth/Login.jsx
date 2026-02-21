@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthProvider";
 import "./Login.css";
 import { motion } from "framer-motion";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-import { notifyError, notifySuccess } from "../utils/notify";
+import { notifyError, notifySuccess } from "../../utils/notify";
 
 function Login() {
   const navigate = useNavigate();
