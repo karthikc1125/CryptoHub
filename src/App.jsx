@@ -42,6 +42,7 @@ import CryptoChatbot from "./CryptoChatbot/CryptoChatbot";
 import Feedback from "./pages/Feedback";
 import TrendingCoins from "@/pages/TrendingCoins";
 import NewListings from "@/pages/NewListings";
+import TopLosers from "@/pages/TopLosers";
 import ApiAccess from "@/pages/ApiAccess";
 
 
@@ -137,6 +138,7 @@ const App = () => {
                 <Route path="/blog/article/:id" element={<BlogDetail />} />
                 <Route path="/trending" element={<TrendingCoins />} />
                 <Route path="/new-listings" element={<NewListings />} />
+                <Route path="/top-losers" element={<TopLosers />} />
                 <Route path="/api-access" element={<ApiAccess />} />
 
                 <Route path="/features" element={<Features />} />
