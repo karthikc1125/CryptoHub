@@ -78,7 +78,7 @@ const Footer = () => {
               <li><Link to="/trending">Trending Coins</Link></li>
               <li><Link to="/gainers">Top Gainers</Link></li>
               <li><Link to="/losers">Top Losers</Link></li>
-              <li><Link to="/new">New Listings</Link></li>
+              <li><Link to="/new-listings">New Listings</Link></li>
             </ul>
           </div>
 
