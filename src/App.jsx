@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext, useRef, useMemo } from "react";
 import Lenis from "lenis";
 import Navbar from "@/components/Layout/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -45,10 +45,11 @@ import NewListings from "@/pages/NewListings";
 import TopLosers from "@/pages/TopLosers";
 import ApiAccess from "@/pages/ApiAccess";
 
-
 const App = () => {
+  const lenisRef = useRef(null);
+  const { isLoading } = useContext(CoinContext);
+  const location = useLocation();
 
-  const lenisRef = useRef(null)
   useEffect(() => {
     const lenis = new Lenis({
       smoothWheel: true,
@@ -59,29 +60,40 @@ const App = () => {
 
     lenisRef.current = lenis;
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    let animationFrameId;
 
-    requestAnimationFrame(raf);
+    const raf = (time) => {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    };
+
+    animationFrameId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       lenisRef.current = null;
     };
   }, []);
 
-  const { isLoading } = useContext(CoinContext);
-  const location = useLocation();
-  const isDashboard =
-    location.pathname === "/dashboard" ||
-    location.pathname === "/leaderboard" ||
-    location.pathname === "/market-overview" ||
-    location.pathname === "/change-password" ||
-    location.pathname === "/saved-insights";
+  const dashboardRoutes = useMemo(
+    () => [
+      "/dashboard",
+      "/leaderboard",
+      "/market-overview",
+      "/change-password",
+      "/saved-insights",
+      "/profile",
+    ],
+    []
+  );
 
-  const authRoutes = ["/login", "/signup", "/forgot-password", "/verify-email"];
+  const authRoutes = useMemo(
+    () => ["/login", "/signup", "/forgot-password", "/verify-email"],
+    []
+  );
+
+  const isDashboard = dashboardRoutes.includes(location.pathname);
   const isAuthPage = authRoutes.includes(location.pathname);
 
   useEffect(() => {
@@ -120,9 +132,7 @@ const App = () => {
       <ThemeProvider>
         <AuthProvider>
           <div className="app">
-            {/* Loading Spinner - will show when isLoading is true */}
             {isLoading && !isDashboard && <LoadingSpinner />}
-
             <div
               className={
                 isDashboard ? "app-dashboard-container" : "app-container"
@@ -133,7 +143,6 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/blog" element={<Blog />} />
-                {/* Blog detail route supporting both slug and id patterns */}
                 <Route path="/blog/:slug" element={<BlogDetail />} />
                 <Route path="/blog/article/:id" element={<BlogDetail />} />
                 <Route path="/trending" element={<TrendingCoins />} />
@@ -154,8 +163,6 @@ const App = () => {
                   }
                 />
                 <Route path="/contributors" element={<Contributors />} />
-
-                {/* Dashboard Layout with nested routes - all share the same sidebar */}
                 <Route
                   element={
                     <PrivateRoute>
@@ -164,34 +171,30 @@ const App = () => {
                   }
                 >
                   <Route path="/dashboard" element={<DashboardContent />} />
-                  <Route path="/market-overview" element={<MarketOverview />} />
+                  <Route
+                    path="/market-overview"
+                    element={<MarketOverview />}
+                  />
                   <Route path="/leaderboard" element={<Leaderboard />} />
-                  <Route path="/change-password" element={<ChangePassword />} />
-                  <Route path="/saved-insights" element={<SavedInsights />} />
+                  <Route
+                    path="/change-password"
+                    element={<ChangePassword />}
+                  />
+                  <Route
+                    path="/saved-insights"
+                    element={<SavedInsights />}
+                  />
                   <Route path="/profile" element={<Profile />} />
                 </Route>
-
-                {/* Coin route - accessible to all but shows sidebar if logged in */}
                 <Route path="/coin/:coinId" element={<CoinWrapper />} />
-
-                {/* Add 404 Route if you implemented it earlier */}
-                {/* <Route path="*" element={<NotFound />} /> */}
-
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/contactus" element={<ContactUs />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/feedback" element={<Feedback />} />
-
-                {/* About Section */}
                 <Route path="/about" element={<About />} />
-
-                {/* Page Not Found */}
-                <Route path="*" element={<PageNotFound />} />
-
-
-
                 <Route path="/cookies" element={<CookiePolicy />} />
+                <Route path="*" element={<PageNotFound />} />
               </Routes>
             </div>
             {!isDashboard && !isAuthPage && <Footer />}
