@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider";
+import { useAuth } from "../../context/useAuth";
 import "./Signup.css";
 import { motion } from "framer-motion";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
@@ -14,7 +14,7 @@ function Signup() {
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -62,7 +62,8 @@ function Signup() {
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = "Password must contain uppercase, lowercase and number";
+      newErrors.password =
+        "Password must contain uppercase, lowercase and number";
     }
 
     if (!formData.confirmPassword) {
@@ -84,7 +85,9 @@ function Signup() {
 
       try {
         await signup(formData.email, formData.password, formData.fullName);
-        notifySuccess("Account created! Please check your email to verify your account.");
+        notifySuccess(
+          "Account created! Please check your email to verify your account.",
+        );
         setTimeout(() => navigate("/verify-email"), 1500);
       } catch (error) {
         console.error("Signup error:", error);
@@ -93,9 +96,11 @@ function Signup() {
         let errorMessage = "Failed to create account. Please try again.";
 
         if (error.code === "auth/email-already-in-use") {
-          errorMessage = "This email is already registered. Please login instead.";
+          errorMessage =
+            "This email is already registered. Please login instead.";
         } else if (error.code === "auth/weak-password") {
-          errorMessage = "Password is too weak. Please use a stronger password.";
+          errorMessage =
+            "Password is too weak. Please use a stronger password.";
         } else if (error.code === "auth/invalid-email") {
           errorMessage = "Invalid email address.";
         } else if (error.code === "auth/network-request-failed") {
@@ -147,7 +152,8 @@ function Signup() {
         <div className="auth-header">
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle">
-            Join <span className="text-gradient-purple">CryptoHub</span> and start tracking today
+            Join <span className="text-gradient-purple">CryptoHub</span> and
+            start tracking today
           </p>
         </div>
 
@@ -168,7 +174,9 @@ function Signup() {
                 autoComplete="name"
               />
             </div>
-            {errors.fullName && <span className="error-message">{errors.fullName}</span>}
+            {errors.fullName && (
+              <span className="error-message">{errors.fullName}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -187,7 +195,9 @@ function Signup() {
                 autoComplete="email"
               />
             </div>
-            {errors.email && <span className="error-message">{errors.email}</span>}
+            {errors.email && (
+              <span className="error-message">{errors.email}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -215,7 +225,9 @@ function Signup() {
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
             </div>
-            {errors.password && <span className="error-message">{errors.password}</span>}
+            {errors.password && (
+              <span className="error-message">{errors.password}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -238,7 +250,9 @@ function Signup() {
                 className="toggle-password"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 disabled={loading}
-                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showConfirmPassword ? "Hide password" : "Show password"
+                }
               >
                 {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
               </button>
@@ -252,13 +266,21 @@ function Signup() {
             <input type="checkbox" id="terms" required disabled={loading} />
             <label htmlFor="terms">
               I agree to the{" "}
-              <Link to="/terms" className="terms-link">Terms of Service</Link>{" "}
+              <Link to="/terms" className="terms-link">
+                Terms of Service
+              </Link>{" "}
               and{" "}
-              <Link to="/privacy" className="terms-link">Privacy Policy</Link>
+              <Link to="/privacy" className="terms-link">
+                Privacy Policy
+              </Link>
             </label>
           </div>
 
-          <button type="submit" className="btn-neon-purple w-full" disabled={loading}>
+          <button
+            type="submit"
+            className="btn-neon-purple w-full"
+            disabled={loading}
+          >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
 
@@ -272,7 +294,11 @@ function Signup() {
             onClick={handleGoogleSignup}
             disabled={loading}
           >
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="google-icon" />
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
+              className="google-icon"
+            />
             Google Account
           </button>
         </form>
