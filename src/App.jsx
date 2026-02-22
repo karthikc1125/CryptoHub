@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef, useMemo } from "react";
+import React, { useEffect, useContext, useRef, lazy, Suspense, useMemo } from "react";
 import Lenis from "lenis";
 import Navbar from "@/components/Layout/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -146,6 +146,7 @@ const App = () => {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogDetail />} />
                 <Route path="/blog/article/:id" element={<BlogDetail />} />
+                <Route path="/ai-blog" element={<Suspense fallback={<div style={{ minHeight: '100vh', background: '#0a0a0a' }} />}><AIBlogPage /></Suspense>} />
                 <Route path="/trending" element={<TrendingCoins />} />
                 <Route path="/new-listings" element={<NewListings />} />
                 <Route path="/top-losers" element={<TopLosers />} />
