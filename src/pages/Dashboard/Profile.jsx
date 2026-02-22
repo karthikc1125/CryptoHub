@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAuth } from "../../context/AuthProvider";
-import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/useAuth";
+import { useTheme } from "../../context/useTheme";
 import { notifySuccess, notifyError } from "../../utils/notify"; // Assuming this exists based on Login.jsx
 import {
   FiUser,

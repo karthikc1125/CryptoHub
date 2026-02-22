@@ -158,3 +158,5 @@ export const LeaderboardProvider = ({ children }) => {
     </LeaderboardContext.Provider>
   );
 };
+
+export default LeaderboardContext;
