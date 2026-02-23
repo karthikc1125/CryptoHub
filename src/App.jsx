@@ -40,12 +40,11 @@ import PageNotFound from "@/components/Common/PageNotFound";
 import About from "@/components/Sections/About";
 import CryptoChatbot from "./CryptoChatbot/CryptoChatbot";
 import Feedback from "./pages/Feedback";
+
 import TrendingCoins from "@/pages/TrendingCoins";
 import NewListings from "@/pages/NewListings";
-const AIBlogPage = lazy(() => import("@/pages/AIBlog/AIBlogPage"));
+import TopGainers from "./pages/TopGainers";
 
-import TopLosers from "@/pages/TopLosers";
-import ApiAccess from "@/pages/ApiAccess";
 
 const App = () => {
   const lenisRef = useRef(null);
@@ -152,6 +151,8 @@ const App = () => {
                 <Route path="/new-listings" element={<NewListings />} />
                 <Route path="/top-losers" element={<TopLosers />} />
                 <Route path="/api-access" element={<ApiAccess />} />
+
+                <Route path="/gainers" element={<TopGainers />} />
 
                 <Route path="/features" element={<Features />} />
                 <Route path="/signup" element={<Signup />} />
