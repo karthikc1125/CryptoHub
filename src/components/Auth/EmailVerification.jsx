@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider";
+import { useAuth } from "../../context/useAuth";
 import { FiMail, FiRefreshCw, FiCheckCircle } from "react-icons/fi";
 import { notifyError, notifySuccess, notifyInfo } from "../../utils/notify";
 import "./EmailVerification.css";
 
 function EmailVerification() {
-  const { currentUser, sendVerificationEmail, reloadUserVerificationStatus, logout } = useAuth();
+  const {
+    currentUser,
+    sendVerificationEmail,
+    reloadUserVerificationStatus,
+    logout,
+  } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(false);
@@ -18,13 +23,14 @@ function EmailVerification() {
       notifySuccess("Verification email sent! Please check your inbox.");
     } catch (error) {
       console.error("Error sending verification email:", error);
-      
+
       let errorMessage = "Failed to send verification email. Please try again.";
-      
+
       if (error.code === "auth/too-many-requests") {
-        errorMessage = "Too many requests. Please wait a few minutes before trying again.";
+        errorMessage =
+          "Too many requests. Please wait a few minutes before trying again.";
       }
-      
+
       notifyError(errorMessage);
     } finally {
       setLoading(false);
@@ -35,14 +41,18 @@ function EmailVerification() {
     setCheckingStatus(true);
     try {
       const isVerified = await reloadUserVerificationStatus();
-      
+
       if (isVerified) {
-        notifySuccess("Email verified successfully! Redirecting to dashboard...");
+        notifySuccess(
+          "Email verified successfully! Redirecting to dashboard...",
+        );
         setTimeout(() => {
           navigate("/dashboard");
         }, 1500);
       } else {
-        notifyInfo("Email not verified yet. Please check your inbox and click the verification link.");
+        notifyInfo(
+          "Email not verified yet. Please check your inbox and click the verification link.",
+        );
       }
     } catch (error) {
       console.error("Error checking verification status:", error);
@@ -68,22 +78,21 @@ function EmailVerification() {
         <div className="email-verification-icon">
           <FiMail />
         </div>
-        
+
         <h1 className="email-verification-title">Verify Your Email</h1>
-        
+
         <p className="email-verification-message">
           We've sent a verification email to:
         </p>
-        
-        <p className="email-verification-email">
-          {currentUser?.email}
-        </p>
-        
+
+        <p className="email-verification-email">{currentUser?.email}</p>
+
         <p className="email-verification-instructions">
-          Please check your inbox and click the verification link to activate your account.
-          Don't forget to check your spam folder if you don't see the email.
+          Please check your inbox and click the verification link to activate
+          your account. Don't forget to check your spam folder if you don't see
+          the email.
         </p>
-        
+
         <div className="email-verification-actions">
           <button
             onClick={handleCheckVerification}
@@ -102,7 +111,7 @@ function EmailVerification() {
               </>
             )}
           </button>
-          
+
           <button
             onClick={handleResendEmail}
             disabled={loading}
@@ -121,12 +130,12 @@ function EmailVerification() {
             )}
           </button>
         </div>
-        
+
         <div className="email-verification-footer">
           <p className="email-verification-help">
             Need help? <a href="/contactus">Contact Support</a>
           </p>
-          
+
           <button onClick={handleLogout} className="btn-text">
             Sign out and use a different account
           </button>
